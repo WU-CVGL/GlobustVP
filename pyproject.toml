@@ -1,0 +1,23 @@
+[project]
+name = "globustvp"
+description = "Convex Relaxation for Robust Vanishing Point Estimation in Manhattan World"
+version = "0.0"
+authors = [
+    {name = "Bangyan Liao"},
+    {name = "Zhenjun Zhao"},
+]
+readme = "README.md"
+requires-python = ">=3.6"
+license = {file = "LICENSE"}
+classifiers = [
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+]
+urls = { repository = "https://github.com/ericzzj1989/GlobustVP"}
+
+[tool.setuptools]
+packages = ["globustvp"]
+
+[tool.setuptools.dynamic]
+dependencies = { file = ["requirements.txt"] }

@@ -1,0 +1,33 @@
+{
+    "iteration": 40,
+    "outlier_ratio": [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7],
+    "vanishing_point_num": 3,
+    "line_num": 90,
+    "endpoint_noise": 0.0,
+    "gt_vp_noise": 1e-3,
+    "line_length": 4,
+    "c": 0.03,
+    "sample_line_num": 8,
+    "is_fast_solver": true,
+    "use_uncertainty": true,
+    "histogram_len": 100,
+    "outlier_randn": true,
+    "outlier_randn_epsilon": 0.1,
+    "rand_permutation": true,
+    "eigen_threshold": 9,
+    "debug": false,
+    "solver": "MOSEK",
+    "solver_opts": {
+      "mosek_params": {
+        "MSK_DPAR_INTPNT_CO_TOL_REL_GAP": 1e-15,
+        "MSK_DPAR_OPTIMIZER_MAX_TIME": 100.0,
+        "MSK_IPAR_INTPNT_SOLVE_FORM": "MSK_SOLVE_DUAL",
+        "MSK_IPAR_LOG": 3
+      }
+    },
+    "K": [
+      [800, 0, 320],
+      [0, 800, 240],
+      [0, 0, 1]
+    ]
+}
