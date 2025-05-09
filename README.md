@@ -62,7 +62,7 @@ Official implementation of the CVPR 2025 Award Candidate & Oral paper:
 - `cvxpy` with an SDP solver (e.g., [MOSEK](https://www.mosek.com/))
 
 
-Install via pip:
+**Install via pip**:
 
 ```bash
 git clone https://github.com/ericzzj1989/GlobustVP.git && cd GlobustVP
@@ -139,7 +139,7 @@ python -m globustvp.run_experiments --config globustvp/config/param.json
 
 ## 📝 Citation
 
-If you use this code or paper, please cite:
+If you use this code or paper, please consider citing:
 
 ```bibtex
 @inproceedings{liao2025globustvp,
