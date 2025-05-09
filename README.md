@@ -36,7 +36,7 @@ Official implementation of the CVPR 2025 Award Candidate & Oral paper:
 
 <p align="center">
   <a href="https://arxiv.org/abs/2505.04788">
-    <img src="./media/teaser.jpg" alt="Logo" width=80%>
+    <img src="./media/teaser.png" alt="Logo" width=50%>
   </a>
   <br>
   <em>A globally optimal and outlier-robust method for vanishing point (VP) estimation in a Manhattan world, using convex relaxation techniques.</em>
@@ -59,7 +59,7 @@ Official implementation of the CVPR 2025 Award Candidate & Oral paper:
 **Dependencies**:
 - Python ≥ 3.8
 - `numpy`, `matplotlib`, `scipy`
-- `cvxpy` with an SDP solver (e.g., [MOSEK](https://www.mosek.com/), `SCS`, or `CVXOPT`)
+- `cvxpy` with an SDP solver (e.g., [MOSEK](https://www.mosek.com/))
 
 
 Install via pip:
