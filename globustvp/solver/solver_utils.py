@@ -13,7 +13,8 @@ def generate_bin(all_2D_lines: np.ndarray, param: Dict) -> List[int]:
 
     Parameters:
         all_2D_lines : np.ndarray
-            Normalized 2D line segments, shape (N, 4).
+            Normalized 2D line segments,
+            where each row is [x1, y1, x2, y2], shape (N, 4).
         param : Dict
             Dictionary of configuration parameters,
             including number of direction bins.
@@ -26,7 +27,7 @@ def generate_bin(all_2D_lines: np.ndarray, param: Dict) -> List[int]:
     lines = all_2D_lines
     num_of_lines = lines.shape[0]
 
-    histogram_len = param.get("histogram_len", 15) # Number of bins for the histogram
+    histogram_len = param.get("histogram_len", 100) # Number of bins for the histogram
     dir_histogram = np.zeros((histogram_len, 2))  # Holds counts of lines in each bin and bin index
     dir_histogram[:, 1] = np.arange(1, histogram_len + 1)
     

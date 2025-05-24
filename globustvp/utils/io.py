@@ -1,7 +1,45 @@
-import numpy as np
+import argparse
 import os
 import json
-from typing import Any, List, Dict
+import cv2
+import numpy as np
+from typing import Any, List, Dict, Tuple
+
+
+def parse_args() -> argparse.Namespace:
+    """
+    Parse command-line arguments for running VP estimation experiments.
+
+    Returns:
+        argparse.Namespace
+            Parsed arguments containing the path to the configuration JSON file.
+    """
+    parser = argparse.ArgumentParser(
+        description="Run synthetic experiments for vanishing point estimation."
+    )
+    parser.add_argument(
+        "--config",
+        type=str,
+        required=True,
+        help="Path to JSON file specifying experiment parameters.",
+    )
+    return parser.parse_args()
+
+
+def load_config(config_path: str) -> Dict:
+    """
+    Load configuration parameters from a JSON file.
+
+    Parameters:
+        config_path : str
+            Path to the configuration JSON file.
+
+    Returns:
+        Dict
+            Dictionary containing experiment parameters.
+    """
+    with open(config_path, "r") as f:
+        return json.load(f)
 
 
 def to_serializable(obj: Any) -> Any:
@@ -70,3 +108,25 @@ def save_results(
     
     # Confirmation message
     print(f"✅ Results saved to {file_path}")
+
+
+def load_image_and_gray(img_path: str) -> Tuple[np.ndarray, np.ndarray]:
+    """
+    Load a color image and its corresponding grayscale version.
+
+    Parameters:
+        img_path : str
+            Path to the input image.
+
+    Returns:
+        img : np.ndarray
+            Loaded color image (BGR), shape (H, W, 3).
+        gray : np.ndarray
+            Grayscale image, shape (H, W).
+    """
+    img = cv2.imread(img_path, cv2.IMREAD_COLOR)
+    if img is None:
+        raise FileNotFoundError(f"❌ Failed to load image at '{img_path}'")
+
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    return img, gray

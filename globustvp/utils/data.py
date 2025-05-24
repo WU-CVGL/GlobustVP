@@ -2,7 +2,12 @@ import numpy as np
 import random
 from typing import List, Tuple, Dict
 
-from .geometry import normalize_lines, project_and_add_noise, line_uncertainty
+from .geometry import (
+    normalize_lines,
+    project_and_add_noise,
+    compute_line_uncertainties,
+    compute_backprojection_normals
+)
 from .plot import plot_lines
 
 
@@ -246,22 +251,11 @@ def synthetic_data(
     # Optional debug plot (normalized)
     if param.get("debug", False):
         plot_lines(first_2D_lines_norm, second_2D_lines_norm, third_2D_lines_norm, num_outliers // 3, normalized=True)
-        
-
+    
     # Back-projection plane normals
-    para_lines = np.cross(
-        np.hstack((all_2D_lines_norm[:, :2], np.ones((total_num, 1)))),
-        np.hstack((all_2D_lines_norm[:, 2:4], np.ones((total_num, 1))))
-    )
-    para_lines /= np.linalg.norm(para_lines, axis=1, keepdims=True)
+    para_lines = compute_backprojection_normals(all_2D_lines_norm)
 
     # Optional uncertainty estimation
-    uncertainty = np.ones((total_num, 1))
-    if param.get("use_uncertainty", False):
-        for i in range(total_num):
-            u = line_uncertainty(K, all_2D_lines_norm[i, :2], all_2D_lines_norm[i, 2:4])
-            uncertainty[i] = u
-        min_u, max_u = np.min(uncertainty), np.max(uncertainty)
-        uncertainty = 0.1 + (uncertainty - min_u) * 0.2 / (max_u - min_u + 1e-8)
+    uncertainty = compute_line_uncertainties(all_2D_lines_norm, K, param.get("use_uncertainty", False))
 
     return gt_corrs, all_2D_lines_norm, para_lines, uncertainty, gt_vps

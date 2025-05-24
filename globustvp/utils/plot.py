@@ -1,4 +1,5 @@
 import os
+import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 from typing import List, Dict
@@ -28,7 +29,7 @@ def plot_lines(
 
     Returns:
         None
-            Displays a plot with the specified lines, distinguishing outliers and inliers.
+            Display a plot with the specified lines, distinguishing outliers and inliers.
     """
     plt.figure(figsize=(10, 8))
 
@@ -64,6 +65,60 @@ def plot_lines(
     plt.close()
 
 
+def plot_lines_on_image(
+    image: np.ndarray,
+    lines: np.ndarray,
+    line_color: str = "b",
+    line_width: float = 2.5,
+    pause_time: float = 3.0,
+    title: str = "LSD detected lines"
+) -> None:
+    """
+    Plot extracted line segments by LSD on top of an image.
+
+    Parameters:
+        image : np.ndarray
+            Input image in grayscale/BGR format, shape (H, W) or (H, W, 3).
+        lines : np.ndarray
+            2D line segments in homogeneous image coordinates from LSD,
+            where each column is [x1, y1, 1, x2, y2, 1]^T, shape (6, N).
+        line_color : str, optional, default="b"
+            Line color in matplotlib format (e.g., "r", "b", "#FF8800").
+        line_width : float, optional, default=2.5
+            Line width.
+        pause_time : float, optional, default=3.0
+            Duration in seconds to display the image.
+        title : str, optional, default="LSD detected lines"
+            Title of the figure.
+    
+    Returns:
+        None
+            Display a plot with line segments extracted from the images using LSD.
+    """
+    # Convert grayscale/BGR image to RGB for consistent color drawing
+    if image.ndim == 2:
+        image = np.stack([image] * 3, axis=-1)
+    elif image.ndim == 3 and image.shape[2] == 3:
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    
+    image = image.astype(np.uint8)
+
+    plt.figure(figsize=(10, 8))
+    plt.imshow(image)
+    
+    # Iterate over lines and draw each one
+    lines = lines.T
+    for x1, y1, _, x2, y2, _ in lines:
+        plt.plot([x1, x2], [y1, y2], color=line_color, linewidth=line_width)
+
+    plt.axis('off')
+    plt.title(title)
+    plt.tight_layout()
+    plt.show(block=False)
+    plt.pause(pause_time)
+    plt.close()
+
+
 def plot_metrics_boxplot(
     results: List[Dict],
     metric_keys: List[str],
@@ -86,7 +141,7 @@ def plot_metrics_boxplot(
 
     Returns:
         None
-            Saves one boxplot figure per metric.
+            Save one boxplot figure per metric.
     """
     label_map = {
         "f1_score": "F1-Score (%)",
@@ -113,3 +168,48 @@ def plot_metrics_boxplot(
         plt.savefig(fig_path)
         plt.close()
         print(f"📦 Saved boxplot: {fig_path}")
+
+
+def visualize_line_vp_associations(
+    image: np.ndarray,
+    lines: np.ndarray,
+    est_corrs: np.ndarray,
+    colors: List[str] = ["r", "g", "b"],
+    line_width: float = 2.5,
+    title: str = "Line-VP associations"
+) -> None:
+    """
+    Visualize vanishing point (VP) line associations by overlaying grouped lines on the image.
+
+    Parameters:
+        image : np.ndarray
+            Original input image in BGR format, shape (H, W, 3).
+        lines : np.ndarray
+            2D line segments in homogeneous image coordinates from LSD,
+            where each column is [x1, y1, 1, x2, y2, 1]^T, shape (6, N).
+        est_corrs : np.ndarray
+            Estimated line-VP associations, shape (3, N).
+        colors : List[str], optional, default=["r", "g", "b"]
+            List of colors used to draw lines corresponding to each VP group.
+        line_width : float, optional, default=2.5
+            Line width.
+        title : str, optional, default="Line-VP associations"
+            Title of the visualization figure.
+
+    Returns:
+        None
+            Display a plot with line-VP association result.
+    """
+    fig, ax = plt.subplots(figsize=(10, 8))
+    ax.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
+
+    for i in range(est_corrs.shape[0]):
+        line_ids = np.where(est_corrs[i] == 1)[0]
+        for j in line_ids:
+            x1, y1, _, x2, y2, _ = lines[:, j]
+            ax.plot([x1, x2], [y1, y2], color=colors[i % len(colors)], linewidth=line_width)
+
+    ax.set_title(title)
+    ax.axis("off")
+    plt.tight_layout()
+    plt.show()

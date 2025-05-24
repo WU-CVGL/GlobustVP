@@ -16,7 +16,8 @@ def globustvp(
 
     Parameters:
         all_2D_lines: np.ndarray
-            Normalized 2D line segments, shape (N, 4).
+            Normalized 2D line segments,
+            where each row is [x1, y1, x2, y2], shape (N, 4).
         para_lines : np.ndarray
             Normal vectors of the back-projection planes, shape (N, 3).
         uncertainty : np.ndarray
