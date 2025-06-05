@@ -12,7 +12,6 @@
     "use_uncertainty": true,
     "histogram_len": 100,
     "outlier_randn": true,
-    "outlier_randn_epsilon": 0.1,
     "rand_permutation": true,
     "eigen_threshold": 9,
     "debug": false,

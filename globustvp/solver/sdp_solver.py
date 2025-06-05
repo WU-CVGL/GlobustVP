@@ -28,7 +28,6 @@ def solve_sdp(
             Optimized variable, shape (size_x, size_x, 2).
     """
     block_size = 3
-    epsilon = param.get("outlier_randn_epsilon", 0.1)  
 
     if size_x > C.shape[0]:
         raise ValueError(f"⚠️ size_x={size_x} exceeds available C size ({C.shape[0]}).")
@@ -44,7 +43,7 @@ def solve_sdp(
     # List to hold the constraints
     constraints = []
 
-    # Theta = theta^2 constraints
+    # Binary inlier/outlier constraints
     for i in range(line_current_size):
         idx = (i + 1) * block_size
         constraints += [
@@ -67,16 +66,13 @@ def solve_sdp(
                 X2[i_idx:i_idx+3, j_idx:j_idx+3] == X2[i_idx:i_idx+3, j_idx:j_idx+3].T
             ]
 
-    # Sum theta == 1 constraints
+    # Single "1" constraints in each column
     for i in range(line_current_size):
         idx = (i + 1) * block_size
-        constraints.append(cp.trace(X1[:3, idx:idx+3]) + cp.trace(X2[:3, idx:idx+3]) == 1)
+        constraints.append(X1[:3, idx:idx+3] + X2[:3, idx:idx+3] == X1[:3, :3])
 
-    # Outlier constraint (optional)
-    if param.get("outlier_randn", False):
-        v = np.random.randn(3, 1)
-        v /= np.linalg.norm(v)
-        constraints.append(cp.norm(X2[:3, :3] - v @ v.T, "fro") <= epsilon)
+    # Redundant constraint
+    constraints.append(X1[:3, :3] == X2[:3, :3])
 
     # Objective and solve
     objective = cp.Minimize(cp.trace(C1 @ X1) + cp.trace(C2 @ X2))
