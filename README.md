@@ -108,7 +108,7 @@ python -m globustvp.run_experiments --config globustvp/config/param.json
 
 We also provide a MATLAB-based evaluation pipeline for real-world images from the YUD dataset.
 
-**Entry point**: `MATLAB/main/real_yud_main.mlx`
+**Entry point**: [real_yud_main.mlx](MATLAB/main/real_yud_main.mlx)
 
 **Dependencies**:
 - MATLAB (tested on R2024b or later)
