@@ -21,11 +21,14 @@
     <sup>*</sup> equal contribution, <sup>†</sup> corresponding author
   </p>
   <div align="center">
-
+  
   [![arXiv](https://img.shields.io/badge/arXiv-2505.04788-b31b1b.svg)](https://arxiv.org/abs/2505.04788)
-  [![License: Apache-2.0](https://img.shields.io/badge/license-Apache%202.0-blue)](LICENSE)
+  [![Video](https://img.shields.io/badge/Video-YouTube-red?logo=youtube)](https://youtu.be/q51jp4Px3Kg)
+  [![Slides](https://img.shields.io/badge/Slides-CVPR%202025-blue?logo=adobeacrobatreader)](https://cvpr.thecvf.com/media/cvpr-2025/Slides/33434.pdf)
+  [![Poster](https://img.shields.io/badge/Poster-CVPR%202025-green?logo=adobeacrobatreader)](https://cvpr.thecvf.com/media/PosterPDFs/CVPR%202025/33434.png?t=1748677598.139723)
   [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/WU-CVGL/GlobustVP/blob/main/demo.ipynb)
-
+  [![License: Apache-2.0](https://img.shields.io/badge/license-Apache%202.0-blue)](LICENSE)
+  
   </div>
 </p>
 
@@ -62,7 +65,7 @@ Official implementation of the CVPR 2025 Award Candidate & Oral paper:
 Install this repo and run the demo on a real image using [LSD](https://dev.ipol.im/~qbammey/anne/LSD_A_Fast_Line_Segment_Detector_with_a_False_Detection_Control.pdf) and [SCS](https://github.com/cvxgrp/scs):
 
 ```bash
-git clone https://github.com/ericzzj1989/GlobustVP.git && cd GlobustVP
+git clone https://github.com/WU-CVGL/GlobustVP.git && cd GlobustVP
 python -m pip install -e .
 ```
 
@@ -100,6 +103,20 @@ python -m globustvp.run_experiments --config globustvp/config/param.json
 - Results saved in `results/experiment_results.json`
 - Figures saved in `figures/`
 - Boxplots of precision, recall, and F1-score are automatically generated
+
+## 🧮 Getting Started (Real-World Data Evaluation — MATLAB)
+
+We also provide a MATLAB-based evaluation pipeline for real-world images from the YUD dataset.
+
+**Entry point**: `MATLAB/main/real_yud_main.mlx`
+
+**Dependencies**:
+- MATLAB (tested on R2024b or later)
+
+**Steps**:
+1. Open `MATLAB/main/real_yud_main.mlx` in MATLAB
+2. Set the path to your YUD data
+3. Run the live script to reproduce real-world results
 
 ## 🧪 Try GlobustVP on Your Image
 
