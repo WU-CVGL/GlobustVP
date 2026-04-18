@@ -1,6 +1,6 @@
 <p align="center">
   <h1 align="center"> <ins>GlobustVP</ins> 💥<br>Convex Relaxation for Robust Vanishing Point Estimation in Manhattan World</h1>
-  <h3 align="center">CVPR 2025 Award Candidate & Oral</h3>
+  <h3 align="center">CVPR 2025 Best Paper Award Candidate & Oral</h3>
   <p align="center">
     <span class="author-block">
       <a href="https://bangyan101.github.io/">Bangyan Liao</a><sup>*</sup>
@@ -32,7 +32,7 @@
   </div>
 </p>
 
-Official implementation of the CVPR 2025 Award Candidate & Oral paper:
+Official implementation of the CVPR 2025 Best Paper Award Candidate & Oral paper:
 **"Convex Relaxation for Robust Vanishing Point Estimation in Manhattan World"**
 
 <p align="center">
