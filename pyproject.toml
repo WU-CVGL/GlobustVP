@@ -14,10 +14,10 @@ classifiers = [
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
 ]
-urls = { repository = "https://github.com/ericzzj1989/GlobustVP"}
+urls = { repository = "https://github.com/WU-CVGL/GlobustVP"}
 
 [tool.setuptools]
-packages = ["globustvp"]
+packages = ["globustvp", "globustvp.solver", "globustvp.utils"]
 
 [tool.setuptools.dynamic]
 dependencies = { file = ["requirements.txt"] }
